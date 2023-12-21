@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragments.HomeFragment">
+    tools:context=".activities.MainActivity">
 
    <androidx.core.widget.NestedScrollView
        android:layout_width="match_parent"
@@ -30,7 +30,7 @@
 
             <TextView
                 android:id="@+id/txt_home"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
                 android:fontFamily="@font/poppins"
@@ -43,8 +43,7 @@
                 android:id="@+id/img_search"
                 android:layout_width="@dimen/_30sdp"
                 android:layout_height="match_parent"
-                android:contentDescription=" "
-                android:scaleType="centerCrop"
+                android:scaleType="fitCenter"
                 android:src="@drawable/ic_search"
                 android:tint="@color/gray"
                 tools:ignore="UseAppTint" />
@@ -68,9 +67,9 @@
              android:id="@+id/random_meal_card"
              android:layout_width="match_parent"
              android:layout_height="@dimen/_160sdp"
-             android:layout_marginStart="@dimen/_25sdp"
+             android:layout_marginStart="@dimen/_20sdp"
              android:layout_marginTop="@dimen/_10sdp"
-             android:layout_marginEnd="@dimen/_25sdp"
+             android:layout_marginEnd="@dimen/_20sdp"
              app:cardCornerRadius="@dimen/_10sdp"
              app:cardUseCompatPadding="true"
              app:layout_constraintEnd_toStartOf="parent"
@@ -82,7 +81,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/accent"
-                android:contentDescription=" " />
+                android:scaleType="centerCrop" />
 
          </androidx.cardview.widget.CardView>
 
