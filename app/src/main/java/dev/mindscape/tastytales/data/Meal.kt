@@ -1,4 +1,4 @@
-package dev.mindscape.tastytales.pojo
+package dev.mindscape.tastytales.data
 
 data class Meal(
     val dateModified: Any,
