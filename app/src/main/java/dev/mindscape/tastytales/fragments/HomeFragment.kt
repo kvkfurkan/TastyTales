@@ -2,16 +2,15 @@ package dev.mindscape.tastytales.fragments
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import dev.mindscape.tastytales.activities.CategoryMealsActivity
 import dev.mindscape.tastytales.activities.MealActivity
 import dev.mindscape.tastytales.adapters.CategoriesAdapter
 import dev.mindscape.tastytales.adapters.MostPopularAdapter
@@ -32,6 +31,7 @@ class HomeFragment : Fragment() {
         const val MEAL_ID = "dev.mindscape.tastytales.fragments.idMeal"
         const val MEAL_NAME = "dev.mindscape.tastytales.fragments.nameMeal"
         const val MEAL_THUMB = "dev.mindscape.tastytales.fragments.thumbMeal"
+        const val CATEGORY_NAME = "dev.mindscape.tastytales.fragments.categoryName"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,9 +60,10 @@ class HomeFragment : Fragment() {
         preparePopularItemsRecyclerView()
         onPopularItemClick()
 
-        preaperCategoriesRecylerView()
+        prepareCategoriesRecyclerView()
         homeMvvm.getCategories()
         observeCategoriesLiveData()
+        onCategoryClick()
 
 
 
@@ -115,16 +116,24 @@ class HomeFragment : Fragment() {
     }
 
     private fun observeCategoriesLiveData() {
-        homeMvvm.observeCategoriesLiveData().observe(viewLifecycleOwner, Observer { categories ->
-                categoriesAdapter.setCategoryList(categories)
-        })
+        homeMvvm.observeCategoriesLiveData().observe(viewLifecycleOwner) { categories ->
+            categoriesAdapter.setCategoryList(categories)
+        }
     }
 
-    private fun preaperCategoriesRecylerView() {
+    private fun prepareCategoriesRecyclerView() {
         categoriesAdapter = CategoriesAdapter()
         binding.recyclerCategories.apply {
             layoutManager = GridLayoutManager(context,3,GridLayoutManager.VERTICAL,false)
             adapter = categoriesAdapter
+        }
+    }
+
+    private fun onCategoryClick() {
+        categoriesAdapter.onItemClick = { category ->
+            val intent = Intent(activity, CategoryMealsActivity::class.java)
+            intent.putExtra(CATEGORY_NAME,category.strCategory)
+            startActivity(intent)
         }
     }
 

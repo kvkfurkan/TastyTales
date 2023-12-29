@@ -1,5 +1,6 @@
 package dev.mindscape.tastytales.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -7,11 +8,12 @@ import com.bumptech.glide.Glide
 import dev.mindscape.tastytales.data.MealsByCategory
 import dev.mindscape.tastytales.databinding.PopularItemsBinding
 
-class MostPopularAdapter(): RecyclerView.Adapter<MostPopularAdapter.PopularMealVH>() {
+class MostPopularAdapter: RecyclerView.Adapter<MostPopularAdapter.PopularMealVH>() {
 
     private var mealsList = ArrayList<MealsByCategory>()
     lateinit var onItemClick:((MealsByCategory) -> Unit)
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setMeals(mealsList: ArrayList<MealsByCategory>){
         this.mealsList = mealsList
         notifyDataSetChanged()
