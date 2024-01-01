@@ -6,11 +6,15 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import dev.mindscape.tastytales.data.Meal
 import dev.mindscape.tastytales.databinding.ActivityMealBinding
+import dev.mindscape.tastytales.db.MealDatabase
 import dev.mindscape.tastytales.fragments.HomeFragment
 import dev.mindscape.tastytales.viewModel.MealViewModel
+import dev.mindscape.tastytales.viewModel.MealViewModelFactory
 
 class MealActivity : AppCompatActivity() {
 
@@ -26,7 +30,10 @@ class MealActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        mealMvvm = ViewModelProvider(this)[MealViewModel::class.java]
+        val mealDatabase = MealDatabase.getInstance(this)
+        val viewModelFactory = MealViewModelFactory(mealDatabase)
+
+        mealMvvm = ViewModelProvider(this, viewModelFactory)[MealViewModel::class.java]
 
         getMealInformation()
 
@@ -37,6 +44,8 @@ class MealActivity : AppCompatActivity() {
         observerMealDetails()
 
         onYoutubeImageClick()
+
+        onFavoriteClick()
     }
 
    private fun getMealInformation(){
@@ -55,11 +64,12 @@ class MealActivity : AppCompatActivity() {
         binding.collapsingToolbar.setCollapsedTitleTextColor(Color.WHITE)
         binding.collapsingToolbar.setExpandedTitleColor(Color.WHITE)
     }
-
+    private var mealToSave : Meal? = null
     private fun observerMealDetails(){
         mealMvvm.observerMealDetailsLiveData().observe(this
         ) { value ->
             onResponseCase()
+            mealToSave = value
 
             binding.txtCategory.text = "Category : ${value.strCategory}"
             binding.txtArea.text = "Area : ${value.strArea}"
@@ -91,6 +101,15 @@ class MealActivity : AppCompatActivity() {
         binding.imgYoutube.setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(youtubeLink))
             startActivity(intent)
+        }
+    }
+
+    private fun onFavoriteClick(){
+        binding.btnAddFav.setOnClickListener {
+            mealToSave?.let {
+                mealMvvm.insertMeal(it)
+                Toast.makeText(this, "Meal Saved", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }
