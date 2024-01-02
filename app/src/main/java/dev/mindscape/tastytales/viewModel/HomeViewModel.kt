@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dev.mindscape.tastytales.data.Category
 import dev.mindscape.tastytales.data.CategoryList
 import dev.mindscape.tastytales.data.MealsByCategoryList
@@ -12,6 +13,7 @@ import dev.mindscape.tastytales.data.Meal
 import dev.mindscape.tastytales.data.MealList
 import dev.mindscape.tastytales.db.MealDatabase
 import dev.mindscape.tastytales.retrofit.RetrofitInstance
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -39,6 +41,18 @@ class HomeViewModel(
                 Log.d("HomeFragmentError", t.message.toString())
             }
         })
+    }
+
+    fun insertMeal(meal:Meal){
+        viewModelScope.launch {
+            mealDatabase.mealDao().upsert(meal)
+        }
+    }
+
+    fun deleteMeal(meal:Meal){
+        viewModelScope.launch {
+            mealDatabase.mealDao().delete(meal)
+        }
     }
 
     fun getCategories(){

@@ -1,5 +1,6 @@
 package dev.mindscape.tastytales.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -12,6 +13,7 @@ class CategoriesAdapter() : RecyclerView.Adapter<CategoriesAdapter.CategoryVH>()
     private var categoriesList = ArrayList<Category>()
     var onItemClick : ((Category) -> Unit)? = null
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setCategoryList(categoriesList: List<Category>){
         this.categoriesList = categoriesList as ArrayList<Category>
         notifyDataSetChanged()

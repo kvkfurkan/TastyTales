@@ -6,6 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import dev.mindscape.tastytales.activities.MainActivity
 import dev.mindscape.tastytales.adapters.FavoriteMealsAdapter
 import dev.mindscape.tastytales.databinding.FragmentFavoritesBinding
@@ -35,6 +38,32 @@ class FavoritesFragment : Fragment() {
 
         prepareRecyclerView()
         observeFavorites()
+
+        val itemTouchHelper = object : ItemTouchHelper.SimpleCallback(
+            ItemTouchHelper.UP or ItemTouchHelper.DOWN,
+            ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT){
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ) = true
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.adapterPosition
+                val deletedMeal = favoritesAdapter.differ.currentList[position]
+                viewModel.deleteMeal(deletedMeal)
+
+                Snackbar.make(requireView(),"Meal Deleted",Snackbar.LENGTH_LONG).setAction(
+                    "Undo"
+                ) {
+                    viewModel.insertMeal(deletedMeal)
+                }.show()
+            }
+
+        }
+
+        ItemTouchHelper(itemTouchHelper).attachToRecyclerView(binding.recyclerFavorites)
+
     }
 
     private fun observeFavorites() {
@@ -45,7 +74,7 @@ class FavoritesFragment : Fragment() {
 
     private fun prepareRecyclerView(){
         favoritesAdapter = FavoriteMealsAdapter()
-        binding.recylerFavorites.apply {
+        binding.recyclerFavorites.apply {
             layoutManager = GridLayoutManager(context,2,GridLayoutManager.VERTICAL,false)
             adapter = favoritesAdapter
         }
