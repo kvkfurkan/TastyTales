@@ -10,16 +10,20 @@ import dev.mindscape.tastytales.data.MealsByCategoryList
 import dev.mindscape.tastytales.data.MealsByCategory
 import dev.mindscape.tastytales.data.Meal
 import dev.mindscape.tastytales.data.MealList
+import dev.mindscape.tastytales.db.MealDatabase
 import dev.mindscape.tastytales.retrofit.RetrofitInstance
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class HomeViewModel():ViewModel(){
+class HomeViewModel(
+    private val mealDatabase: MealDatabase
+):ViewModel(){
 
     private var randomMealLiveData = MutableLiveData<Meal>()
     private var popularItemsLiveData = MutableLiveData<List<MealsByCategory>>()
     private var categoriesLiveData = MutableLiveData<List<Category>>()
+    private var favoriteMealsLiveData = mealDatabase.mealDao().getAllMeals()
     fun getRandomMeal(){
         RetrofitInstance.api.getRandomMeal().enqueue(object : Callback<MealList> {
             override fun onResponse(call: Call<MealList>, response: Response<MealList>) {
@@ -77,5 +81,9 @@ class HomeViewModel():ViewModel(){
 
     fun observeCategoriesLiveData() : LiveData<List<Category>>{
         return categoriesLiveData
+    }
+
+    fun observeFavoriteMealsLiveData() : LiveData<List<Meal>>{
+        return favoriteMealsLiveData
     }
 }
