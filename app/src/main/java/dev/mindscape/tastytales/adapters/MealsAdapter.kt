@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide
 import dev.mindscape.tastytales.data.Meal
 import dev.mindscape.tastytales.databinding.MealItemBinding
 
-class FavoriteMealsAdapter : RecyclerView.Adapter<FavoriteMealsAdapter.FavoritesVH>() {
+class MealsAdapter : RecyclerView.Adapter<MealsAdapter.FavoritesVH>() {
     inner class FavoritesVH(val binding : MealItemBinding) : RecyclerView.ViewHolder(binding.root)
 
     private val diffUtil = object : DiffUtil.ItemCallback<Meal>() {

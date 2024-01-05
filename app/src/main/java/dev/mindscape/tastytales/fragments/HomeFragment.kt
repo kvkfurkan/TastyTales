@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import dev.mindscape.tastytales.R
 import dev.mindscape.tastytales.activities.CategoryMealsActivity
 import dev.mindscape.tastytales.activities.MainActivity
 import dev.mindscape.tastytales.activities.MealActivity
@@ -68,7 +70,7 @@ class HomeFragment : Fragment() {
         observeCategoriesLiveData()
         onCategoryClick()
 
-
+        onSearchItemClick()
 
 
 
@@ -156,7 +158,12 @@ class HomeFragment : Fragment() {
             mealBottomSheetFragment.show(childFragmentManager,"Meal Info")
             true
         }
+    }
 
+    private fun onSearchItemClick(){
+        binding.imgSearchButton.setOnClickListener {
+           findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
+        }
     }
 
 

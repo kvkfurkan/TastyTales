@@ -40,7 +40,7 @@
                 android:textStyle="bold" />
 
             <ImageView
-                android:id="@+id/img_search"
+                android:id="@+id/img_search_button"
                 android:layout_width="@dimen/_30sdp"
                 android:layout_height="match_parent"
                 android:scaleType="fitCenter"

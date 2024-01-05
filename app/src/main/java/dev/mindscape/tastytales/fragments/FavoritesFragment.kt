@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import dev.mindscape.tastytales.activities.MainActivity
-import dev.mindscape.tastytales.adapters.FavoriteMealsAdapter
+import dev.mindscape.tastytales.adapters.MealsAdapter
 import dev.mindscape.tastytales.databinding.FragmentFavoritesBinding
 import dev.mindscape.tastytales.viewModel.HomeViewModel
 
@@ -18,7 +18,7 @@ class FavoritesFragment : Fragment() {
 
     private lateinit var binding : FragmentFavoritesBinding
     private lateinit var viewModel : HomeViewModel
-    private lateinit var favoritesAdapter : FavoriteMealsAdapter
+    private lateinit var favoritesAdapter : MealsAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -73,7 +73,7 @@ class FavoritesFragment : Fragment() {
     }
 
     private fun prepareRecyclerView(){
-        favoritesAdapter = FavoriteMealsAdapter()
+        favoritesAdapter = MealsAdapter()
         binding.recyclerFavorites.apply {
             layoutManager = GridLayoutManager(context,2,GridLayoutManager.VERTICAL,false)
             adapter = favoritesAdapter
