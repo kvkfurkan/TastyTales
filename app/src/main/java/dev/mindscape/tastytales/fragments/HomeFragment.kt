@@ -17,6 +17,7 @@ import dev.mindscape.tastytales.adapters.MostPopularAdapter
 import dev.mindscape.tastytales.data.MealsByCategory
 import dev.mindscape.tastytales.databinding.FragmentHomeBinding
 import dev.mindscape.tastytales.data.Meal
+import dev.mindscape.tastytales.fragments.bottomsheet.MealBottomSheetFragment
 import dev.mindscape.tastytales.viewModel.HomeViewModel
 
 class HomeFragment : Fragment() {
@@ -54,16 +55,19 @@ class HomeFragment : Fragment() {
         viewModel.getRandomMeal()
         observeRandomMeal()
         onRandomMealClick()
+        onRandomItemLongClick()
 
         viewModel.getPopularItems()
         observePopularItemsLiveData()
         preparePopularItemsRecyclerView()
         onPopularItemClick()
+        onPopularItemLongClick()
 
         prepareCategoriesRecyclerView()
         viewModel.getCategories()
         observeCategoriesLiveData()
         onCategoryClick()
+
 
 
 
@@ -90,6 +94,8 @@ class HomeFragment : Fragment() {
             this.randomMeal = meal
         }
     }
+
+
 
     private fun observePopularItemsLiveData() {
         viewModel.observePopularItemsLiveData().observe(viewLifecycleOwner
@@ -135,6 +141,22 @@ class HomeFragment : Fragment() {
             intent.putExtra(CATEGORY_NAME,category.strCategory)
             startActivity(intent)
         }
+    }
+
+    private fun onPopularItemLongClick(){
+        popularItemsAdapter.onLongItemClick = {meal->
+            val mealBottomSheetFragment = MealBottomSheetFragment.newInstance(meal.idMeal)
+            mealBottomSheetFragment.show(childFragmentManager,"Meal Info")
+        }
+    }
+
+    private fun onRandomItemLongClick(){
+        binding.randomMealCard.setOnLongClickListener{
+            val mealBottomSheetFragment = MealBottomSheetFragment.newInstance(randomMeal.idMeal)
+            mealBottomSheetFragment.show(childFragmentManager,"Meal Info")
+            true
+        }
+
     }
 
 

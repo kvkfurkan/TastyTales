@@ -26,6 +26,7 @@ class HomeViewModel(
     private var popularItemsLiveData = MutableLiveData<List<MealsByCategory>>()
     private var categoriesLiveData = MutableLiveData<List<Category>>()
     private var favoriteMealsLiveData = mealDatabase.mealDao().getAllMeals()
+    private var bottomSheetMealLiveData = MutableLiveData<Meal>()
     fun getRandomMeal(){
         RetrofitInstance.api.getRandomMeal().enqueue(object : Callback<MealList> {
             override fun onResponse(call: Call<MealList>, response: Response<MealList>) {
@@ -40,6 +41,22 @@ class HomeViewModel(
             override fun onFailure(call: Call<MealList>, t: Throwable) {
                 Log.d("HomeFragmentError", t.message.toString())
             }
+        })
+    }
+
+    fun getMealById(id:String){
+        RetrofitInstance.api.getMealDetails(id).enqueue(object : Callback<MealList>{
+            override fun onResponse(call: Call<MealList>, response: Response<MealList>) {
+                val meal = response.body()?.meals?.first()
+                meal?.let {data->
+                    bottomSheetMealLiveData.postValue(data)
+                }
+            }
+
+            override fun onFailure(call: Call<MealList>, t: Throwable) {
+                Log.e("HomeViewModel",t.message.toString())
+            }
+
         })
     }
 
@@ -100,4 +117,6 @@ class HomeViewModel(
     fun observeFavoriteMealsLiveData() : LiveData<List<Meal>>{
         return favoriteMealsLiveData
     }
+
+    fun observeBottomSheetMealLiveData() : LiveData<Meal> = bottomSheetMealLiveData
 }
