@@ -1,5 +1,6 @@
 package dev.mindscape.tastytales.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import dev.mindscape.tastytales.activities.MainActivity
+import dev.mindscape.tastytales.activities.MealActivity
 import dev.mindscape.tastytales.adapters.MealsAdapter
 import dev.mindscape.tastytales.databinding.FragmentFavoritesBinding
 import dev.mindscape.tastytales.viewModel.HomeViewModel
@@ -38,6 +40,7 @@ class FavoritesFragment : Fragment() {
 
         prepareRecyclerView()
         observeFavorites()
+        onItemClick()
 
         val itemTouchHelper = object : ItemTouchHelper.SimpleCallback(
             ItemTouchHelper.UP or ItemTouchHelper.DOWN,
@@ -79,6 +82,18 @@ class FavoritesFragment : Fragment() {
             adapter = favoritesAdapter
         }
     }
+
+    private fun onItemClick(){
+        favoritesAdapter.onItemClick = {meal->
+            val intent = Intent(activity, MealActivity::class.java)
+            intent.putExtra(HomeFragment.MEAL_ID,meal.idMeal)
+            intent.putExtra(HomeFragment.MEAL_NAME,meal.strMeal)
+            intent.putExtra(HomeFragment.MEAL_THUMB,meal.strMealThumb)
+            startActivity(intent)
+        }
+    }
+
+
 
 
 }

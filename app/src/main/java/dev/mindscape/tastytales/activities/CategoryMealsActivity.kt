@@ -1,9 +1,8 @@
 package dev.mindscape.tastytales.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import dev.mindscape.tastytales.adapters.CategoryMealsAdapter
@@ -24,13 +23,16 @@ class CategoryMealsActivity : AppCompatActivity() {
         prepareRecyclerView()
 
         categoryMealsViewModel = ViewModelProvider(this)[CategoryMealsViewModel::class.java]
+        val mealName = intent.getStringExtra(HomeFragment.CATEGORY_NAME)!!
+        categoryMealsViewModel.getMealsByCategory(mealName)
 
-        categoryMealsViewModel.getMealsByCategory(intent.getStringExtra(HomeFragment.CATEGORY_NAME)!!)
-
-        categoryMealsViewModel.oberserveMealsLiveData().observe(this, Observer { mealsList->
+        categoryMealsViewModel.oberserveMealsLiveData().observe(this) { mealsList ->
+            binding.txtCategoryName.text = mealName
             binding.txtCategoryCount.text = mealsList.size.toString()
             categoryMealsAdapter.setMealsList(mealsList)
-        })
+        }
+
+        onItemClick()
     }
 
     private fun prepareRecyclerView(){
@@ -38,6 +40,17 @@ class CategoryMealsActivity : AppCompatActivity() {
         binding.recylerMeals.apply {
             layoutManager = GridLayoutManager(context,2,GridLayoutManager.VERTICAL,false)
             adapter = categoryMealsAdapter
+        }
+    }
+
+    private fun onItemClick(){
+        categoryMealsAdapter.onItemClick = {meal->
+            val intent = Intent(this, MealActivity::class.java)
+            intent.putExtra(HomeFragment.MEAL_ID,meal.idMeal)
+            intent.putExtra(HomeFragment.MEAL_NAME,meal.strMeal)
+            intent.putExtra(HomeFragment.MEAL_THUMB,meal.strMealThumb)
+            startActivity(intent)
+
         }
     }
 }

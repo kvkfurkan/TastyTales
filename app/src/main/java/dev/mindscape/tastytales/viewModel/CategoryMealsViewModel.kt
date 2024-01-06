@@ -14,7 +14,7 @@ import retrofit2.Response
 class CategoryMealsViewModel : ViewModel() {
     val mealsLiveData = MutableLiveData<List<MealsByCategory>>()
     fun getMealsByCategory(categoryName : String){
-        RetrofitInstance.api.getMealsByCategory(categoryName).enqueue(object : Callback<MealsByCategoryList>{
+        RetrofitInstance.api.getPopularItems(categoryName).enqueue(object : Callback<MealsByCategoryList>{
             override fun onResponse(
                 call: Call<MealsByCategoryList>,
                 response: Response<MealsByCategoryList>

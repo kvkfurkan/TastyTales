@@ -1,5 +1,6 @@
 package dev.mindscape.tastytales.adapters
 
+
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -10,7 +11,9 @@ import dev.mindscape.tastytales.data.Meal
 import dev.mindscape.tastytales.databinding.MealItemBinding
 
 class MealsAdapter : RecyclerView.Adapter<MealsAdapter.FavoritesVH>() {
+    var onItemClick : ((Meal) -> Unit)? = null
     inner class FavoritesVH(val binding : MealItemBinding) : RecyclerView.ViewHolder(binding.root)
+
 
     private val diffUtil = object : DiffUtil.ItemCallback<Meal>() {
         override fun areItemsTheSame(oldItem: Meal, newItem: Meal): Boolean {
@@ -39,5 +42,11 @@ class MealsAdapter : RecyclerView.Adapter<MealsAdapter.FavoritesVH>() {
         val meal = differ.currentList[position]
         Glide.with(holder.itemView).load(meal.strMealThumb).into(holder.binding.imgMeal)
         holder.binding.txtMealName.text = meal.strMeal
+
+        holder.itemView.setOnClickListener {
+            onItemClick?.invoke(meal)
+        }
+
     }
+
 }

@@ -1,5 +1,6 @@
 package dev.mindscape.tastytales.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import dev.mindscape.tastytales.activities.MainActivity
+import dev.mindscape.tastytales.activities.MealActivity
 import dev.mindscape.tastytales.adapters.MealsAdapter
 import dev.mindscape.tastytales.databinding.FragmentSearchBinding
 import dev.mindscape.tastytales.viewModel.HomeViewModel
@@ -55,6 +57,8 @@ class SearchFragment : Fragment() {
                 viewModel.searchMeals(searchQuery.toString())
             }
         }
+
+        onItemClick()
     }
 
     private fun prepareRecyclerView(){
@@ -77,6 +81,16 @@ class SearchFragment : Fragment() {
 
             searchRecyclerViewAdapter.differ.submitList(mealsList)
 
+        }
+    }
+
+    private fun onItemClick(){
+        searchRecyclerViewAdapter.onItemClick = {meal->
+            val intent = Intent(activity, MealActivity::class.java)
+            intent.putExtra(HomeFragment.MEAL_ID,meal.idMeal)
+            intent.putExtra(HomeFragment.MEAL_NAME,meal.strMeal)
+            intent.putExtra(HomeFragment.MEAL_THUMB,meal.strMealThumb)
+            startActivity(intent)
         }
     }
 
