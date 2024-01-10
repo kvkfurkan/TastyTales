@@ -85,4 +85,8 @@ dependencies {
     kapt("androidx.room:room-compiler:$room_version")
     implementation("androidx.room:room-ktx:$room_version")
 
+    //Splash API
+    implementation("androidx.core:core-splashscreen:1.0.1")
+
+
 }
