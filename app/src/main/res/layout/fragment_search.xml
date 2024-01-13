@@ -27,6 +27,8 @@
             android:paddingStart="15dp"
             android:paddingEnd="15dp"
             android:hint="Search Meals"
+            android:textColor="@color/light_gray"
+            android:textColorHint="@color/light_gray"
             android:background="@drawable/search_box_background"/>
         <ImageView
             android:id="@+id/img_search"
@@ -34,7 +36,7 @@
             android:layout_height="@dimen/_35sdp"
             android:src="@drawable/ic_arrow"
             android:layout_gravity="center"
-            app:tint="@color/light_gray" />
+            app:tint="@color/gray" />
 
     </LinearLayout>
     

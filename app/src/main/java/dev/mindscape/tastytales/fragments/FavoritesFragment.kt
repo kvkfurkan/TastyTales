@@ -20,7 +20,7 @@ class FavoritesFragment : Fragment() {
 
     private lateinit var binding : FragmentFavoritesBinding
     private lateinit var viewModel : HomeViewModel
-    private lateinit var favoritesAdapter : MealsAdapter
+    private var favoritesAdapter = MealsAdapter()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -72,11 +72,11 @@ class FavoritesFragment : Fragment() {
     private fun observeFavorites() {
         viewModel.observeFavoriteMealsLiveData().observe(viewLifecycleOwner) { meals ->
             favoritesAdapter.differ.submitList(meals)
+            binding.txtFavoritesCount.text = "Favorite Meals : ${meals.size}"
         }
     }
 
     private fun prepareRecyclerView(){
-        favoritesAdapter = MealsAdapter()
         binding.recyclerFavorites.apply {
             layoutManager = GridLayoutManager(context,2,GridLayoutManager.VERTICAL,false)
             adapter = favoritesAdapter
