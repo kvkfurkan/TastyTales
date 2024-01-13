@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import dev.mindscape.tastytales.R
 import dev.mindscape.tastytales.data.Meal
 import dev.mindscape.tastytales.databinding.ActivityMealBinding
 import dev.mindscape.tastytales.db.MealDatabase
@@ -24,11 +25,16 @@ class MealActivity : AppCompatActivity() {
     private lateinit var mealThumb:String
     private lateinit var mealMvvm:MealViewModel
     private lateinit var youtubeLink:String
+    private var isFavorite = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMealBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+        isFavorite = intent.getBooleanExtra("IS_FAVORITE",false)
+
+        favoriteStatus(isFavorite)
 
         val mealDatabase = MealDatabase.getInstance(this)
         val viewModelFactory = MealViewModelFactory(mealDatabase)
@@ -79,15 +85,6 @@ class MealActivity : AppCompatActivity() {
         }
     }
 
-    private fun loadingCase(){
-        binding.progressBar.visibility = View.VISIBLE
-        binding.btnAddFav.visibility = View.INVISIBLE
-        binding.txtInstruction.visibility = View.INVISIBLE
-        binding.txtCategory.visibility = View.INVISIBLE
-        binding.txtArea.visibility = View.INVISIBLE
-        binding.imgYoutube.visibility = View.INVISIBLE
-    }
-
     private fun onResponseCase(){
         binding.progressBar.visibility = View.INVISIBLE
         binding.btnAddFav.visibility = View.VISIBLE
@@ -106,10 +103,30 @@ class MealActivity : AppCompatActivity() {
 
     private fun onFavoriteClick(){
         binding.btnAddFav.setOnClickListener {
-            mealToSave?.let {
-                mealMvvm.insertMeal(it)
-                Toast.makeText(this, "Meal Saved", Toast.LENGTH_SHORT).show()
+            if(!isFavorite){
+                mealToSave?.let {
+                    isFavorite = true
+                    binding.btnAddFav.setImageResource(R.drawable.ic_favorites_fill)
+                    mealMvvm.insertMeal(it)
+                    Toast.makeText(this, "Meal Saved", Toast.LENGTH_SHORT).show()
+                }
             }
+            else{
+                mealToSave?.let {
+                    isFavorite = false
+                    binding.btnAddFav.setImageResource(R.drawable.ic_favorites)
+                    mealMvvm.deleteMeal(it)
+                    Toast.makeText(this, "Meal Deleted From Favorites", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    private fun favoriteStatus(isFavorite : Boolean){
+        if (isFavorite){
+            binding.btnAddFav.setImageResource(R.drawable.ic_favorites_fill)
+        } else{
+            binding.btnAddFav.setImageResource(R.drawable.ic_favorites)
         }
     }
 }

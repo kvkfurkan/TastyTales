@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".activities.MainActivity">
 
@@ -35,7 +36,7 @@
                 android:layout_weight="3"
                 android:fontFamily="@font/poppins"
                 android:text="Home"
-                android:textColor="@color/accent"
+                android:textColor="@color/black"
                 android:textSize="@dimen/_25sdp"
                 android:textStyle="bold" />
 
@@ -57,7 +58,7 @@
              android:layout_marginTop="@dimen/_10sdp"
              android:fontFamily="@font/poppins"
              android:text="What would you like to eat"
-             android:textColor="@color/black"
+             android:textColor="@color/primary"
              android:textSize="@dimen/_17ssp"
              android:textStyle="bold"
              app:layout_constraintStart_toStartOf="@id/linear_header"
@@ -92,7 +93,7 @@
              android:layout_marginTop="@dimen/_18sdp"
              android:fontFamily="@font/poppins"
              android:text="Over popular items"
-             android:textColor="@color/black"
+             android:textColor="@color/primary"
              android:textSize="@dimen/_17ssp"
              android:textStyle="bold"
              app:layout_constraintStart_toStartOf="@id/txt_home2"
@@ -111,10 +112,11 @@
              android:id="@+id/txt_home4"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
-             android:layout_marginTop="@dimen/_10sdp"
+             android:layout_marginStart="4dp"
+             android:layout_marginTop="12dp"
              android:fontFamily="@font/poppins"
              android:text="Categories"
-             android:textColor="@color/black"
+             android:textColor="@color/primary"
              android:textSize="@dimen/_17ssp"
              android:textStyle="bold"
              app:layout_constraintStart_toStartOf="@+id/recycler_popular_meals"
@@ -123,6 +125,7 @@
          <androidx.cardview.widget.CardView
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
+             android:backgroundTint="@color/secondary"
              android:layout_marginStart="@dimen/_25sdp"
              android:layout_marginEnd="@dimen/_25sdp"
              app:cardCornerRadius="@dimen/_10sdp"

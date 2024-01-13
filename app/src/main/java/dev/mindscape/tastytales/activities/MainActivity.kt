@@ -35,4 +35,5 @@ class MainActivity : AppCompatActivity() {
         NavigationUI.setupWithNavController(binding.btmNav, navHostFragment.navController)
 
     }
+
 }

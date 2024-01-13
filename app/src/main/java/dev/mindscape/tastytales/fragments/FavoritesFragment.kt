@@ -89,6 +89,7 @@ class FavoritesFragment : Fragment() {
             intent.putExtra(HomeFragment.MEAL_ID,meal.idMeal)
             intent.putExtra(HomeFragment.MEAL_NAME,meal.strMeal)
             intent.putExtra(HomeFragment.MEAL_THUMB,meal.strMealThumb)
+            intent.putExtra("IS_FAVORITE", true)
             startActivity(intent)
         }
     }
