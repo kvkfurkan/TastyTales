@@ -20,6 +20,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:textSize="@dimen/_18ssp"
+        android:layout_marginTop="@dimen/_5sdp"
         android:layout_height="50dp"/>
 
     <androidx.recyclerview.widget.RecyclerView

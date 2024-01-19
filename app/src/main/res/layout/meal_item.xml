@@ -7,6 +7,8 @@
     app:cardUseCompatPadding="true"
     android:backgroundTint="@color/secondary"
     android:elevation="@dimen/_2sdp"
+    android:layout_marginStart="@dimen/_5sdp"
+    android:layout_marginEnd="@dimen/_5sdp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
