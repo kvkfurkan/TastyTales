@@ -11,4 +11,4 @@ Tasty Tales, a mobile app that brings delicious recipes right to your fingertips
 | ![Screenshot 5](https://images2.imgbox.com/41/ce/yZl2jbxR_o.png) | ![Screenshot 6](https://images2.imgbox.com/02/3d/A2RjiMC5_o.png) |
 
 | ![Screenshot 7](https://images2.imgbox.com/08/3a/1Xm9ffEx_o.png) | ![Screenshot 8](https://images2.imgbox.com/a6/84/5wFCh60a_o.png) |
-
+|---|---|
